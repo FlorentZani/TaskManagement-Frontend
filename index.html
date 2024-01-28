@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tasks management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+        * {
+          min-width: 0;
+          box-sizing: border-box;
+        }
+        body {
+          background-image: url("./images/background.jpg");
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: center;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          width: 100vw;
+          height: 100vh;
+          justify-content: center;
+          align-items: center;
+        }
+        .content-auto {
+          content-visibility: auto;
+        }
+        #login-container,
+        .item-container {
+          width: calc(100% - 24px);
+          max-width: 500px;
+        }
+      }
+    </style>
+</head>
+
+<body>
+    <h1 class="text-3xl font-bold">Kyçu</h1>
+    <div id="login-container"
+        class="p-4 max-h-sm overflow-y-auto bg-white rounded-xl flex flex-col justify-center content-center relative shadow-xl gap-2">
+        <form method="post" class="flex flex-col w-full gap-4 rounded-lg" onsubmit="event.preventDefault(); login()">
+            <input id="login-username" minlength="4" maxlength="32" type="text"
+                class="bg-white border p-2 rounded-md !ring-0" placeholder="username" required />
+            <input id="login-password" minlength="7" maxlength="32" type="password"
+                class="bg-white border p-2 rounded-md !ring-0" placeholder="password" required />
+            <button
+                class="w-full px-4 bg-black hover:bg-gray-800 text-white py-2 font-semibold rounded-lg transition duration-150"
+                type="submit">
+                Kyçu
+            </button>
+        </form>
+        <p id="login-error" class="text-red-500 text-center"></p>
+        <div class="w-full flex flex-col items-center">
+            <p>Nuk keni një llogari?</p>
+            <a class="font-semibold text-blue-500 underline" href="/register.html">
+                Rregjistrohu
+            </a>
+        </div>
+    </div>
+    <script src="js/index.js"></script>
+</body>
+
+</html>
