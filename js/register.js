@@ -1,3 +1,18 @@
+function isUserLoggedIn() {
+  const token = localStorage.getItem("token");
+  if (token) {
+    window.location.pathname = "tasks.html";
+  } else {
+    document.querySelector("body").classList.remove("hidden");
+  }
+}
+
+isUserLoggedIn();
+
+const checkIfUserIsLoggedInInterval = setInterval(function () {
+  isUserLoggedIn();
+}, 1000);
+
 function register() {
   const name = document.getElementById("register-name").value;
   const lastName = document.getElementById("register-lastname").value;
@@ -30,8 +45,7 @@ function register() {
         window.location.pathname = "tasks.html";
       })
       .catch(function () {
-        document.getElementById("register-error").innerText =
-          "Something went wrong";
+        document.getElementById("register-error").innerText = "Diçka shkoi keq";
       });
   }
 }

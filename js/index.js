@@ -1,3 +1,18 @@
+function isUserLoggedIn() {
+  const token = localStorage.getItem("token");
+  if (token) {
+    window.location.pathname = "tasks.html";
+  } else {
+    document.querySelector("body").classList.remove("hidden");
+  }
+}
+
+isUserLoggedIn();
+
+const checkIfUserIsLoggedInInterval = setInterval(function () {
+  isUserLoggedIn();
+}, 1000);
+
 function login() {
   const username = document.getElementById("login-username").value;
   const password = document.getElementById("login-password").value;
@@ -26,8 +41,7 @@ function login() {
         window.location.pathname = "tasks.html";
       })
       .catch(function () {
-        document.getElementById("login-error").innerText =
-          "Something went wrong";
+        document.getElementById("login-error").innerText = "Diçka shkoi keq";
       });
   }
 }

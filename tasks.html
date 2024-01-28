@@ -37,9 +37,13 @@
     </style>
 </head>
 
-<body>
-    <div class="item-container">
-        <h1 id="page-title" class="text-3xl font-bold">Task management</h1>
+<body class="hidden">
+    <div class="item-container flex justify-between">
+        <h1 id="page-title" class="text-3xl font-bold">Detyrat e mia</h1>
+        <a href="/account.html"
+            class="bg-white px-3 flex justify-center items-center rounded-md font-semibold border-2 border-gray-200">
+            Llogaria ime
+        </a>
     </div>
 
     <div id="tasks-container"
@@ -47,11 +51,11 @@
         <button
             class="w-full px-4 bg-gray-50 hover:bg-gray-100 py-2 font-semibold rounded-lg border-2 border-dashed border-gray-200 transition duration-150"
             onclick="showAddTaskDialog()">
-            Add a task
+            Shto një detyrë
         </button>
-        <div id="loading-box" class="w-full">
-            <h1 class="text-md font-semibold text-center">Tasks are loading</h1>
-            <p class="text-gray-500 text-center">Please wait a moment</p>
+        <div id="loading-box" class="w-full py-24">
+            <h1 class="text-md font-semibold text-center">Detyrat po proçesohen</h1>
+            <p class="text-gray-500 text-center">Ju lutem prisni një moment.</p>
         </div>
     </div>
 

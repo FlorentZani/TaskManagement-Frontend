@@ -1,8 +1,9 @@
-// kontrolln nese perdoruesi eshte i kycur
 function isUserLoggedIn() {
   const token = localStorage.getItem("token");
   if (token === null) {
     window.location.pathname = "index.html";
+  } else {
+    document.querySelector("body").classList.remove("hidden");
   }
 }
 
@@ -10,7 +11,7 @@ isUserLoggedIn();
 
 const checkIfUserIsLoggedInInterval = setInterval(function () {
   isUserLoggedIn();
-}, 1000);
+}, 100);
 
 function logout() {
   localStorage.removeItem("token");
@@ -57,7 +58,7 @@ function renderTask(task) {
   actionButtonsContainer.appendChild(deleteButton);
   deleteButton.className =
     "bg-red-100 hover:bg-red-200 h-7 w-16 rounded-md border-2 border-red-200 text-red-500 font-semibold transition duration-150";
-  deleteButton.innerText = "Delete";
+  deleteButton.innerText = "Fshi";
   deleteButton.onclick = function () {
     deleteTask(task.taskId);
   };
@@ -66,7 +67,7 @@ function renderTask(task) {
   actionButtonsContainer.appendChild(editButton);
   editButton.className =
     "h-7 w-16 rounded-md font-semibold bg-white hover:bg-gray-100 transition duration-150";
-  editButton.innerText = "Edit";
+  editButton.innerText = "Ndrysho";
   editButton.onclick = function () {
     showEditTaskDialog(task.taskId);
   };
@@ -128,6 +129,27 @@ function renderTask(task) {
   taskContainer.append(newTask);
 }
 
+function renderEmptyBox() {
+  const taskContainer = document.getElementById("tasks-container");
+  const emptyTasksBox = document.createElement("div");
+  emptyTasksBox.id = "empty-tasks-box";
+  emptyTasksBox.classList = "w-full py-24";
+
+  const emptyTasksBoxTitle = document.createElement("h2");
+  emptyTasksBoxTitle.innerText = "Nuk ka detyra të disponueshme.";
+  emptyTasksBoxTitle.classList = "text-md font-semibold text-center";
+
+  const emptyTasksBoxDescription = document.createElement("p");
+  emptyTasksBoxDescription.innerText =
+    "Lista juaj e detyrave është aktualisht bosh. Shtoni një detyrë të re për të organizuar aktivitetet tuaja.";
+  emptyTasksBoxDescription.classList = "text-gray-500 text-center";
+
+  emptyTasksBox.append(emptyTasksBoxTitle);
+  emptyTasksBox.append(emptyTasksBoxDescription);
+
+  taskContainer.appendChild(emptyTasksBox);
+}
+
 function getTasks() {
   const token = localStorage.getItem("token");
 
@@ -149,9 +171,13 @@ function getTasks() {
       if (loadingBox) {
         loadingBox.remove();
       }
-      tasks.map(function (task) {
-        renderTask(task);
-      });
+      if (tasks.length > 0) {
+        tasks.map(function (task) {
+          renderTask(task);
+        });
+      } else {
+        renderEmptyBox();
+      }
     })
     .catch(function () {
       const loadingBox = document.getElementById("loading-box");
@@ -159,47 +185,6 @@ function getTasks() {
         loadingBox.remove();
       }
     });
-
-  // fetch("https://jsonplaceholder.typicode.com/todos/1")
-  //     .then(function (response) {
-  //         // ktu ty spupozohet te vi nje array nga BE
-  //         // tasks = json
-
-  //         const DUMMY_TASKS = [
-  //             {
-  //                 id: "task1",
-  //                 deadline: "2023-06-15T13:45:30",
-  //                 title: "Title 1 lorem ipsum",
-  //                 description: "Description 1 ",
-  //                 status: "UNFINISHED",
-  //             },
-  //             {
-  //                 id: "task2",
-  //                 deadline: "2025-06-15T13:45:30",
-  //                 title: "Title 1 lorem ipsum",
-  //                 description: "Description 1 lorem ipsum dlor asmet",
-  //                 status: "UNFINISHED",
-  //             },
-  //             {
-  //                 id: "task3",
-  //                 deadline: "2025-06-15T13:45:30",
-  //                 title: "Title 1 lorem ipsum",
-  //                 description: "Description 1 lorem ipsum dlor asmet",
-  //                 status: "UNFINISHED",
-  //             },
-  //         ];
-  //         return DUMMY_TASKS;
-  //         // return response.json();
-  //     })
-  //     .then(function (tasks) {
-  //         const loadingBox = document.getElementById("loading-box")
-  //         if (loadingBox) {
-  //             loadingBox.remove()
-  //         }
-  //         tasks.map(function (task) {
-  //             renderTask(task)
-  //         });
-  //     });
 }
 
 getTasks();
@@ -229,7 +214,7 @@ function taskToggle(taskId) {
       updateTaskUI(taskElement, checkbox.checked, taskDeadlineDatePassed);
 
       document.getElementById("update-task-status-error").innerText =
-        "Unable to change task status.";
+        "Nuk mund të ndryshohet statusi i detyrës. Ju lutemi të provoni përsëri.";
       document
         .getElementById("update-task-status-error")
         .classList.remove("hidden");
@@ -295,11 +280,17 @@ function deleteTask(taskId) {
       if (task && task.parentElement) {
         task.parentElement.remove();
         document.getElementById("delete-task-error").classList.add("hidden");
+
+        const taskContainerChildrenCount =
+          document.getElementById("tasks-container").childElementCount;
+        if (taskContainerChildrenCount === 1) {
+          renderEmptyBox();
+        }
       }
     })
     .catch(function () {
       document.getElementById("delete-task-error").innerText =
-        "Unable to delete task.";
+        "Nuk mund të fshihet detyra. Ju lutemi të provoni përsëri.";
       document.getElementById("delete-task-error").classList.remove("hidden");
     });
 }
@@ -366,11 +357,18 @@ function editTaskDialogSubmit() {
       document.getElementById(
         `task-deadline-date-${taskOnEditID}`
       ).textContent = formatDate(deadlineDate);
+
+      const taskElement = document.getElementById(`task-${taskOnEditID}`);
+      const checkbox = document.getElementById(`checkbox-${taskOnEditID}`);
+      const isDeadlinePassed = hasTimePassed(deadlineDate);
+      const isChecked = checkbox.checked;
+
+      updateTaskUI(taskElement, isChecked, isDeadlinePassed);
+
       closeEditTaskDialog();
     })
     .catch(function () {
-      document.getElementById("edit-task-error").innerText =
-        "Something went wrong";
+      document.getElementById("edit-task-error").innerText = "Diçka shkoi keq";
     });
 }
 
@@ -398,7 +396,6 @@ function addTaskDialogSubmit() {
   const deadlineDate = document.getElementById(
     "add-task-dialog-deadline-date"
   ).value;
-  console.log(deadlineDate, "dedline date log");
 
   const requestData = {
     title: title,
@@ -423,8 +420,13 @@ function addTaskDialogSubmit() {
       return response.json();
     })
     .then(function (response) {
+      const emptyTasksBox = document.getElementById("empty-tasks-box");
+      if (emptyTasksBox) {
+        emptyTasksBox.remove();
+      }
+
       renderTask({
-        id: response.taskId,
+        taskId: response.taskId,
         deadline: deadlineDate,
         title: title,
         description: description,
@@ -433,8 +435,7 @@ function addTaskDialogSubmit() {
       closeAddTaskDialog();
     })
     .catch(function () {
-      document.getElementById("add-task-error").innerText =
-        "Something went wrong";
+      document.getElementById("add-task-error").innerText = "Diçka shkoi keq";
     });
 }
 
