@@ -74,52 +74,52 @@
     </div>
 
     <dialog id="edit-task-dialog" class="rounded-lg">
-        <h2 class="px-4 mt-4 text-xl font-semibold">Edit task</h2>
+        <h2 class="px-4 mt-4 text-xl font-semibold">Ndrysho detajet e detyrës</h2>
         <form method="dialog" class="flex flex-col w-96 gap-4 p-4 rounded-lg"
             onsubmit="event.preventDefault(); editTaskDialogSubmit()">
             <input id="edit-task-dialog-title" type="text" class="bg-white border p-2 rounded-md !ring-0"
-                placeholder="Title" required />
+                placeholder="Titulli" required />
             <input id="edit-task-dialog-description" type="text" class="bg-white border p-2 rounded-md !ring-0"
-                placeholder="Description" required />
+                placeholder="Përshkrimi" required />
             <input id="edit-task-dialog-deadline-date" type="date" class="bg-white border p-2 rounded-md !ring-0"
-                placeholder="Date" required />
+                placeholder="Afati" required />
             <p id="edit-task-error" class="text-red-500 text-center"></p>
             <div class="w-full flex justify-center items-center gap-2 select-none">
                 <button id="edit-dialog-cancel"
                     class="flex-1 py-2 bg-white hover:bg-gray-100 transition duration-150 rounded-md" type="reset"
                     onclick="closeEditTaskDialog()">
-                    Cancel
+                    Anullo
                 </button>
                 <button id="edit-dialog-submit"
                     class="flex-1 py-2 bg-green-100 hover:bg-green-200 transition duration-150 rounded-md"
                     type="submit">
-                    Confirm
+                    Ruaj
                 </button>
             </div>
         </form>
     </dialog>
 
     <dialog id="add-task-dialog" class="rounded-lg">
-        <h2 class="px-4 mt-4 text-xl font-semibold">Add a task</h2>
+        <h2 class="px-4 mt-4 text-xl font-semibold">Shto një detyrë</h2>
         <form method="dialog" class="flex flex-col w-96 gap-4 p-4 rounded-lg"
             onsubmit="event.preventDefault(); addTaskDialogSubmit()">
             <input id="add-task-dialog-title" type="text" class="bg-white border p-2 rounded-md !ring-0"
-                placeholder="Title" required />
+                placeholder="Titulli" required />
             <input id="add-task-dialog-description" type="text" class="bg-white border p-2 rounded-md !ring-0"
-                placeholder="Description" required />
+                placeholder="Përshkrimi" required />
             <input id="add-task-dialog-deadline-date" type="date" class="bg-white border p-2 rounded-md !ring-0"
-                placeholder="Date" required />
+                placeholder="Afati" required />
             <p id="add-task-error" class="text-red-500 text-center"></p>
             <div class="w-full flex justify-center items-center gap-2 select-none">
                 <button id="add-dialog-cancel"
                     class="flex-1 py-2 bg-white hover:bg-gray-100 transition duration-150 rounded-md" type="reset"
                     onclick="closeAddTaskDialog()">
-                    Cancel
+                    Anullo
                 </button>
                 <button id="add-dialog-submit"
                     class="flex-1 py-2 bg-green-100 hover:bg-green-200 transition duration-150 rounded-md"
                     type="submit">
-                    Confirm
+                    Ruaj
                 </button>
             </div>
         </form>
