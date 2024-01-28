@@ -57,7 +57,7 @@ function renderTask(task) {
   const deleteButton = document.createElement("button");
   actionButtonsContainer.appendChild(deleteButton);
   deleteButton.className =
-    "bg-red-100 hover:bg-red-200 h-7 w-16 rounded-md border-2 border-red-200 text-red-500 font-semibold transition duration-150";
+    "bg-red-100 hover:bg-red-200 h-7 w-20 rounded-md border-2 border-red-200 text-red-500 font-semibold transition duration-150";
   deleteButton.innerText = "Fshi";
   deleteButton.onclick = function () {
     deleteTask(task.taskId);
@@ -66,7 +66,7 @@ function renderTask(task) {
   const editButton = document.createElement("button");
   actionButtonsContainer.appendChild(editButton);
   editButton.className =
-    "h-7 w-16 rounded-md font-semibold bg-white hover:bg-gray-100 transition duration-150";
+    "h-7 w-20 rounded-md font-semibold bg-white hover:bg-gray-100 transition duration-150";
   editButton.innerText = "Ndrysho";
   editButton.onclick = function () {
     showEditTaskDialog(task.taskId);
