@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tasks management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+        * {
+          min-width: 0;
+          box-sizing: border-box;
+        }
+        body {
+          background-image: url("./images/background.jpg");
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: center;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          width: 100vw;
+          height: 100vh;
+          justify-content: center;
+          align-items: center;
+        }
+        .content-auto {
+          content-visibility: auto;
+        }
+        #tasks-container,
+        .item-container {
+          width: calc(100% - 24px);
+          max-width: 700px;
+        }
+      }
+    </style>
+</head>
+
+<body>
+    <div class="item-container">
+        <h1 id="page-title" class="text-3xl font-bold">Task management</h1>
+    </div>
+
+    <div id="tasks-container"
+        class="p-4 max-h-sm overflow-y-auto bg-white rounded-xl flex flex-col justify-center content-center relative shadow-xl z-20 gap-2">
+        <button
+            class="w-full px-4 bg-gray-50 hover:bg-gray-100 py-2 font-semibold rounded-lg border-2 border-dashed border-gray-200 transition duration-150"
+            onclick="showAddTaskDialog()">
+            Add a task
+        </button>
+        <div id="loading-box" class="w-full">
+            <h1 class="text-md font-semibold text-center">Tasks are loading</h1>
+            <p class="text-gray-500 text-center">Please wait a moment</p>
+        </div>
+    </div>
+
+    <div class="item-container flex flex-col gap-2">
+        <p id="delete-task-error"
+            class="hidden py-2 bg-white rounded-md text-red-500 text-center text-sm font-semibold"></p>
+        <p id="update-task-status-error"
+            class="hidden py-2 bg-white rounded-md text-red-500 text-center text-sm font-semibold"></p>
+    </div>
+
+    <div class="item-container">
+        <button id="logout-button" onclick="logout()"
+            class="w-full bg-red-100 hover:bg-red-200 p-1 font-semibold rounded-md border-2 border-red-200 text-red-500 transition duration-150 z-10 hover:scale-[0.99]">
+            Shkyçu
+        </button>
+    </div>
+
+    <dialog id="edit-task-dialog" class="rounded-lg">
+        <h2 class="px-4 mt-4 text-xl font-semibold">Edit task</h2>
+        <form method="dialog" class="flex flex-col w-96 gap-4 p-4 rounded-lg"
+            onsubmit="event.preventDefault(); editTaskDialogSubmit()">
+            <input id="edit-task-dialog-title" type="text" class="bg-white border p-2 rounded-md !ring-0"
+                placeholder="Title" required />
+            <input id="edit-task-dialog-description" type="text" class="bg-white border p-2 rounded-md !ring-0"
+                placeholder="Description" required />
+            <input id="edit-task-dialog-deadline-date" type="date" class="bg-white border p-2 rounded-md !ring-0"
+                placeholder="Date" required />
+            <p id="edit-task-error" class="text-red-500 text-center"></p>
+            <div class="w-full flex justify-center items-center gap-2 select-none">
+                <button id="edit-dialog-cancel"
+                    class="flex-1 py-2 bg-white hover:bg-gray-100 transition duration-150 rounded-md" type="reset"
+                    onclick="closeEditTaskDialog()">
+                    Cancel
+                </button>
+                <button id="edit-dialog-submit"
+                    class="flex-1 py-2 bg-green-100 hover:bg-green-200 transition duration-150 rounded-md"
+                    type="submit">
+                    Confirm
+                </button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog id="add-task-dialog" class="rounded-lg">
+        <h2 class="px-4 mt-4 text-xl font-semibold">Add a task</h2>
+        <form method="dialog" class="flex flex-col w-96 gap-4 p-4 rounded-lg"
+            onsubmit="event.preventDefault(); addTaskDialogSubmit()">
+            <input id="add-task-dialog-title" type="text" class="bg-white border p-2 rounded-md !ring-0"
+                placeholder="Title" required />
+            <input id="add-task-dialog-description" type="text" class="bg-white border p-2 rounded-md !ring-0"
+                placeholder="Description" required />
+            <input id="add-task-dialog-deadline-date" type="date" class="bg-white border p-2 rounded-md !ring-0"
+                placeholder="Date" required />
+            <p id="add-task-error" class="text-red-500 text-center"></p>
+            <div class="w-full flex justify-center items-center gap-2 select-none">
+                <button id="add-dialog-cancel"
+                    class="flex-1 py-2 bg-white hover:bg-gray-100 transition duration-150 rounded-md" type="reset"
+                    onclick="closeAddTaskDialog()">
+                    Cancel
+                </button>
+                <button id="add-dialog-submit"
+                    class="flex-1 py-2 bg-green-100 hover:bg-green-200 transition duration-150 rounded-md"
+                    type="submit">
+                    Confirm
+                </button>
+            </div>
+        </form>
+    </dialog>
+    <script src="js/tasks.js"></script>
+</body>
+
+</html>
