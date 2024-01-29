@@ -238,3 +238,37 @@ function resetPasswordData() {
   document.getElementById("old-password").value = "";
   document.getElementById("new-password").value = "";
 }
+
+function deleteAccount() {
+  const message =
+    "Jeni i sigurt që doni të fshini llogarinë tuaj? Fshirja e llogarisë nuk mund të kthehet.";
+
+  if (confirm(message) == true) {
+    deleteAccountApiCall();
+  }
+}
+
+function deleteAccountApiCall() {
+  const token = localStorage.getItem("token");
+
+  fetch(`https://localhost:7034/api/User/DeleteUser`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error("HTTP error, status = " + response.status);
+      }
+    })
+    .then(function () {
+      localStorage.removeItem("token");
+      window.location.pathname = "index.html";
+    })
+    .catch(function () {
+      document.getElementById("delete-account-error").innerText =
+        "Llogaria juaj nuk mund të fshihet.";
+    });
+}
