@@ -32,6 +32,7 @@
         .item-container {
           width: calc(100% - 24px);
           max-width: 700px;
+          max-height: 57vh;
         }
       }
     </style>
@@ -40,19 +41,21 @@
 <body class="hidden">
     <div class="item-container flex justify-between">
         <h1 id="page-title" class="text-3xl font-bold">Detyrat e mia</h1>
-        <a href="/account.html"
-            class="bg-white px-3 flex justify-center items-center rounded-md font-semibold border-2 border-gray-200">
-            Llogaria ime
-        </a>
+        <div class="flex gap-2">
+            <button
+                class="bg-white px-3 flex justify-center items-center rounded-md font-semibold border-2 border-gray-200 transition duration-150"
+                onclick="showAddTaskDialog()">
+                Shto një detyrë
+            </button>
+            <a href="/account.html"
+                class="bg-white px-3 flex justify-center items-center rounded-md font-semibold border-2 border-gray-200">
+                Llogaria ime
+            </a>
+        </div>
     </div>
 
     <div id="tasks-container"
-        class="p-4 max-h-sm overflow-y-auto bg-white rounded-xl flex flex-col justify-center content-center relative shadow-xl z-20 gap-2">
-        <button
-            class="w-full px-4 bg-gray-50 hover:bg-gray-100 py-2 font-semibold rounded-lg border-2 border-dashed border-gray-200 transition duration-150"
-            onclick="showAddTaskDialog()">
-            Shto një detyrë
-        </button>
+        class="p-4 max-h-sm overflow-y-auto bg-white rounded-xl flex flex-col justify-start content-center relative shadow-xl z-20 gap-2">
         <div id="loading-box" class="w-full py-24">
             <h1 class="text-md font-semibold text-center">Detyrat po proçesohen</h1>
             <p class="text-gray-500 text-center">Ju lutem prisni një moment.</p>
