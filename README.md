@@ -23,12 +23,12 @@ To view and interact with your frontend application, you'll need to serve it usi
 
 ## Running the Backend Server with SQL Server and Entity Framework Core
 
-For the frontend application to function correctly, you need to have the backend server running. This project uses Microsoft SQL Server (SQLEXPRESS) and .NET 6 with Entity Framework Core. Follow these steps to set up and run your backend server:
+To ensure the full functionality of your frontend application, it is crucial to have the backend server running. This project utilizes Microsoft SQL Server (SQLEXPRESS) and is developed using .NET 6 with Entity Framework Core. Here's how to set up and run your backend server:
 
 ### Prerequisites
-- Ensure you have .NET 6 SDK installed on your machine.
-- Have Microsoft SQL Server (SQLEXPRESS) installed and running.
-- A database named `TaskManagmentDB` should exist in your SQL Server instance. If it doesn't and also the commands dosen't create it manually, create it manually using SQL Server Management Studio or another database management tool.
+- .NET 6 SDK installed on your machine.
+- Microsoft SQL Server (SQLEXPRESS) installed and running.
+- A database named `TaskManagmentDB` should exist on your SQL Server instance. Create it manually using SQL Server Management Studio or another database management tool if it's not already there.
 
 ### Steps to Run the Backend Server
 
@@ -36,29 +36,33 @@ For the frontend application to function correctly, you need to have the backend
    - Navigate to the backend directory of your project where the `.csproj` file is located.
 
 2. **Configure the Connection String**:
-   - Open the `appsettings.json` file in your project.
-   - Verify the `ConnectionStrings` section is correctly configured:
+   - Open the `appsettings.json` file.
+   - Ensure the `ConnectionStrings` section is correctly set:
      ```json
      "ConnectionStrings": {
        "DefaultConnection": "Server=ComputerName\\SQLEXPRESS;Database=TaskManagmentDB;Trusted_Connection=True;"
      }
      ```
-   - Replace `ComputerName` with your computer's name or the server where SQL Server is running.
+   - Replace `ComputerName` with the name of your computer or the server where SQL Server is running.
 
-3. **Migrate and Update the Database Using Entity Framework Core**:
-   - Ensure you are in the directory containing the `.csproj` file.
-   - Execute the following command to apply migrations to the `TaskManagmentDB` database:
+3. **Create and Apply Migrations**:
+   - In the same directory as the `.csproj` file, execute the following command to create a new migration (if you haven't already):
+     ```
+     dotnet ef migrations add InitialCreate
+     ```
+     Replace `InitialCreate` with a name that describes the migration.
+   - Apply the migrations to update the `TaskManagmentDB` database:
      ```
      dotnet ef database update
      ```
-     This command will create or update the database schema based on your Entity Framework migrations.
 
 4. **Run the Backend Server**:
-   - Execute the following command to run the backend server:
+   - Execute the command below to start the server:
      ```
      dotnet run
      ```
-     This will start the server and host your backend application.
+
+After completing these steps, your backend server will be up and running. Both the frontend and backend servers must be operational for the complete functionality of your project. Enjoy developing your application!
 
 Once you have completed these steps, your backend server will be operational, and you can start using your frontend application. Remember to keep both the frontend and backend servers running for the full functionality of your project. Happy coding!
 
